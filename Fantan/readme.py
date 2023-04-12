@@ -1,6 +1,6 @@
 
 Giá trị bài: k % 12
-Giá trị bài bắt đầu từ 0 -> 52
+Giá trị bài bắt đầu từ 0 -> 51
 0 là 1, 1 là 2 ...
 Loại bài: k // 12
 0,1,2,3: Cơ, rô, chuồn, bích
