@@ -1,10 +1,14 @@
+## :video_game: Action
+  Action_size: 53
+  [0:52]: Bài muốn đánh
+  [52]: bỏ lượt
 
 Giá trị bài: k % 13
 Giá trị bài bắt đầu từ 0 -> 51
 0 là 1, 1 là 2 ...
 Loại bài: k // 13
 0,1,2,3: Cơ, rô, chuồn, bích
- # Player_state
+## :bust_in_silhouette: Player_state
  <details>
   [0:52]: Player card
   [52:104] : Những lá có thể đánh
@@ -13,7 +17,7 @@ Loại bài: k // 13
   [109:112]: Chip của 3 người chơi
 </details>
 
- # env
+## :globe_with_meridians: env
 <details>
   [0:8]: 8 lá có thể đánh trên bàn
   [8:21]: Bài người chơi 1
