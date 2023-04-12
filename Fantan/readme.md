@@ -5,6 +5,7 @@
       [52]: bỏ lượt
 
 ## :bust_in_silhouette: Player_state
+      STATE_SIZE: 112
       [0:52]: Player card
       [52:104]: Những lá có thể đánh
             Giá trị bài: k % 13
@@ -15,7 +16,7 @@
       [108]: Game đã kết thúc hay chưa
       [109:112]: Chip của 3 người chơi còn lại
 ## :globe_with_meridians: env
-
+      
       [0:8]: 8 lá có thể đánh trên bàn
       [8:21]: Bài người chơi 1
       [22:35]: Bài người chơi 2
