@@ -20,13 +20,13 @@
 
 ## :globe_with_meridians: env
 
-  0:8: 8 lá có thể đánh trên bàn
-  8:21: Bài người chơi 1
-  22:35: Bài người chơi 2
-  36:49: Bài người chơi 3
-  50:63: Bài người chơi 4
-  21,35,49,63: chip của 4 người chơi
-  64: Id người chơi
-  65: Hũ chip chung
-  66: Game đã kết thúc hay chưa
+    0:8: 8 lá có thể đánh trên bàn
+    8:21: Bài người chơi 1
+    22:35: Bài người chơi 2
+    36:49: Bài người chơi 3
+    50:63: Bài người chơi 4
+    21,35,49,63: chip của 4 người chơi
+    64: Id người chơi
+    65: Hũ chip chung
+    66: Game đã kết thúc hay chưa
 
