@@ -12,6 +12,7 @@
                   0 là lá 1...
             Loại bài: k // 13
                   0: Cơ,1: rô,2: chuồn,3: bích
+      [104]: Player chip
       [105:108]: Độ dài lá bài còn lại của 3 người chơi
       [108]: Game đã kết thúc hay chưa
       [109:112]: Chip của 3 người chơi còn lại
