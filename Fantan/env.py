@@ -193,12 +193,10 @@ def one_game_numba(p0,list_other, per_player, per1, per2, per3, p1, p2, p3,):
                             player_cards = env[8+ player_id_not_0_chip[i] * 13:8+player_id_not_0_chip[i]*13+13] # bai cua nhung nguoi khong bi 0 chip
                             arr_player_cards[i*13:i*13+13] = player_cards.astype(np.float64)
                         arr_player_cards = np.reshape(arr_player_cards,(3,13))
-                        print(arr_player_cards)
                         player_card_len = np.array([len(np.where(player_cards > -1)) for player_cards in arr_player_cards])
                         player_lowest_card = np.argmax(player_card_len)
                         player_lowest_card_id = player_id_not_0_chip[player_lowest_card]
                         env[idxPlayerChip[player_lowest_card_id]] += env[65]
-                        print(env[idxPlayerChip])
                         env[65] = 0
                         
                         for pIdx in range(4):
@@ -310,19 +308,22 @@ def random_Env(p_state, per):
     return arr_action[act_idx], per
 
 import importlib.util, json, sys
-from setup import SHORT_PATH
+try:
+    from setup import SHORT_PATH
+except:
+    pass
 
 def load_module_player(player):
- return importlib.util.spec_from_file_location('Agent_player', f"{SHORT_PATH}Agent/{player}/Agent_player.py").loader.load_module()
-@njit()
-def bot_lv0(state, perData):
-    validActions = getValidActions(state)
-    arr_action = np.where(validActions==1)[0]
-    idx = np.random.randint(0, arr_action.shape[0])
-    return arr_action[idx], perData
+    spec = importlib.util.spec_from_file_location('Agent_player', f"{SHORT_PATH}Agent/{player}/Agent_player.py")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
 @njit()
 def check_run_under_njit(agent, perData):
     return True
+
 
 def numba_main_2(p0, num_game, per_player, level, *args):
     num_bot = getAgentSize() - 1
@@ -341,6 +342,7 @@ def numba_main_2(p0, num_game, per_player, level, *args):
         else:
             init = False
 
+    
     if init:
         global _list_per_level_
         global _list_bot_level_
@@ -361,22 +363,22 @@ def numba_main_2(p0, num_game, per_player, level, *args):
                 raise Exception('Hiện tại không có level này')
 
             lst_agent_level = dict_level[env_name][str(level)][2]
-
+            lst_module_level = [load_module_player(lst_agent_level[i]) for i in range(num_bot)]
             for i in range(num_bot):
-                if level == -1:
-                    module_agent = load_module_player(lst_agent_level[i], game_name = env_name)
-                    _list_per_level_.append(module_agent.DataAgent())
-                else:
-                    data_agent_level = np.load(f'{SHORT_PATH}Agent/{lst_agent_level[i]}/Data/{env_name}_{level}/Train.npy',allow_pickle=True)
-                    module_agent = load_module_player(lst_agent_level[i])
-                    _list_per_level_.append(module_agent.convert_to_test(data_agent_level))
-                _list_bot_level_.append(module_agent.Test)
+                data_agent_level = np.load(f'{SHORT_PATH}Agent/{lst_agent_level[i]}/Data/{env_name}_{level}/Train.npy',allow_pickle=True)
+                _list_per_level_.append(lst_module_level[i].convert_to_test(data_agent_level))
+                _list_bot_level_.append(lst_module_level[i].Test)
 
     if check_njit:
         return n_games_numba(p0, num_game, per_player, list_other,
-                                _list_per_level_[0], _list_per_level_[1], _list_per_level_[2],
-                                _list_bot_level_[0], _list_bot_level_[1], _list_bot_level_[2])
+                                _list_per_level_[0], _list_per_level_[1], _list_per_level_[2], _list_per_level_[3],
+                                _list_per_level_[4], _list_per_level_[5], _list_per_level_[6], _list_per_level_[7],
+                                _list_bot_level_[0], _list_bot_level_[1], _list_bot_level_[2], _list_bot_level_[3],
+                                _list_bot_level_[4], _list_bot_level_[5], _list_bot_level_[6], _list_bot_level_[7])
     else:
         return n_games_normal(p0, num_game, per_player, list_other,
-                                _list_per_level_[0], _list_per_level_[1], _list_per_level_[2],
-                                _list_bot_level_[0], _list_bot_level_[1], _list_bot_level_[2])
+                                _list_per_level_[0], _list_per_level_[1], _list_per_level_[2], _list_per_level_[3],
+                                _list_per_level_[4], _list_per_level_[5], _list_per_level_[6], _list_per_level_[7],
+                                _list_bot_level_[0], _list_bot_level_[1], _list_bot_level_[2], _list_bot_level_[3],
+                                _list_bot_level_[4], _list_bot_level_[5], _list_bot_level_[6], _list_bot_level_[7])
+    
