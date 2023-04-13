@@ -299,14 +299,6 @@ def n_games_numba(p0, num_game, per_player, list_other, per1, per2, per3, p1, p2
         win += winner
     return win, per_player
 # -----------------------------------------------------------------------------------
-
-@njit()
-def random_Env(p_state, per):
-    arr_action = getValidActions(p_state)
-    arr_action = np.where(arr_action == 1)[0]
-    act_idx = np.random.randint(0, len(arr_action))
-    return arr_action[act_idx], per
-
 import importlib.util, json, sys
 try:
     from setup import SHORT_PATH
