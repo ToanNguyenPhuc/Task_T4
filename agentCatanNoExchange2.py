@@ -1,3 +1,6 @@
+@njit()
+def DataAgent():
+      return np.array(0.)
 @jit()
 def getPointTILE():
   return np.array(
